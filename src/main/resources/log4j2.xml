@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="debug">
+    <Properties>
+        <Property name="consoleLayout">
+            %highlight{[%d{yyyy-MM-dd hh:mm:ss} [%-5p]] [%c{1}:%L] - %m%n}
+        </Property>
+        <Property name="logFileName">
+            log
+        </Property>
+        <Property name="fileLayout">
+            %highlight{[%d{yyyy-MM-dd hh:mm:ss} [%-5p]] [%c{1}:%L] - %m%n}
+        </Property>
+    </Properties>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${consoleLayout}" disableAnsi="false"/>
+        </Console>
+
+        <RollingFile name="RollingFile">
+            <FileName>log/${logFileName}.log</FileName>
+            <FilePattern>log/${logFileName}.%d{yyyy-MM-dd}.%i.log.gz</FilePattern>
+            <PatternLayout>
+                <Pattern>
+                    ${fileLayout}
+                </Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="5MB"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10" fileIndex="min">
+                <Delete basePath="/logs" maxDepth="3">
+                    <IfLastModified age="10d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <loggers>
+        <!--        JDBC START -->
+        <logger name="jdbc" additivity="false">
+            <AppenderRef ref="console" level="debug"/>
+        </logger>
+        <logger name="jdbc.sqlonly" additivity="false">
+            <AppenderRef ref="console" level="off"/>
+        </logger>
+        <logger name="jdbc.audit" additivity="false">
+            <AppenderRef ref="console" level="off"/>
+        </logger>
+        <logger name="jdbc.sqltiming" additivity="false">
+            <AppenderRef ref="console" level="debug"/>
+            <AppenderRef ref="RollingFile" level="debug"/>
+        </logger>
+        <logger name="jdbc.resultset" additivity="false">
+            <AppenderRef ref="console" level="off"/>
+        </logger>
+        <logger name="jdbc.resultsettable" additivity="false">
+            <AppenderRef ref="console" level="debug"/>
+            <AppenderRef ref="RollingFile" level="debug"/>
+        </logger>
+        <logger name="jdbc.connection" additivity="false">
+            <AppenderRef ref="console" level="off"/>
+        </logger>
+        <!--        JDBC END -->
+
+        <logger name="org.springframework" additivity="false">
+            <AppenderRef ref="console" level="info"/>
+        </logger>
+
+        <logger name="com.spring.study" additivity="false">
+            <AppenderRef ref="console" level="debug"/>
+        </logger>
+
+        <root level="DEBUG">
+            <AppenderRef ref="console"/>
+        </root>
+    </loggers>
+</configuration>
