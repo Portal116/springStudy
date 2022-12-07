@@ -71,7 +71,7 @@
             <AppenderRef ref="console" level="debug"/>
         </logger>
 
-        <root level="DEBUG">
+        <root level="INFO">
             <AppenderRef ref="console"/>
         </root>
     </loggers>

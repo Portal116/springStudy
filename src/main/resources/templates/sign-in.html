@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/sign-process" method="post">
+    <div>
+        <label for="userId">ID</label>
+        <input type="text" id="userId" name="userId">
+    </div>
+    <div>
+        <label for="password">PW</label>
+        <input type="password" id="password" name="password">
+    </div>
+    <div>
+        <button>login</button>
+    </div>
+    <script th:inline="javascript">
+        document.getElementById("userId").focus();
+    </script>
+</form>
+</body>
+</html>
